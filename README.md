@@ -5,17 +5,15 @@ computing fluid properties to Modelica.Media-compatible component models.
 
 The current downloads can be found here:
 
- - [Precompiled Modelica library](https://github.com/modelica-3rdparty/ExternalMedia/releases/download/v3.3.1/ExternalMedia_v3.3.1.zip)
- - [Manual as PDF](https://github.com/modelica-3rdparty/ExternalMedia/releases/download/v3.3.1/ExternalMedia_v3.3.1.pdf)
- - [Full source code](https://github.com/modelica-3rdparty/ExternalMedia/archive/refs/tags/v3.3.1.zip)
+ - [Precompiled Modelica library](https://github.com/modelica-3rdparty/ExternalMedia/releases/download/v4.0.0/ExternalMedia_v4.0.0.zip)
+ - [Manual as PDF](https://github.com/modelica-3rdparty/ExternalMedia/releases/download/v4.0.0/ExternalMedia_v4.0.0.pdf)
+ - [Full source code](https://github.com/modelica-3rdparty/ExternalMedia/archive/refs/tags/v4.0.0.zip)
 
 ## Library overview
 
 The ExternalMedia library provides a framework for interfacing external codes
 computing fluid properties to Modelica.Media-compatible component models. It is
-compatible with Modelica Standard Library (MSL) 3.2.3, which is the latest,
-backwards-compatible version of the 3.2.x series. A version compatible with
-MSL 4.0.0 is planned for the near future.
+compatible with Modelica Standard Library (MSL) 4.0.0.
 
 The current version of the library supports pure and pseudo-pure fluids models,
 possibly two-phase, compliant with the
@@ -23,7 +21,7 @@ Modelica.Media.Interfaces.PartialTwoPhaseMedium interface. Please have a look at
 the [dedicated introduction section](README_introduction.md) for an in-depth
 description of the architecture.
 
-The current release of the library (3.3.1) includes a pre-compiled interface to
+The current release of the library (4.0.0) includes a pre-compiled interface to
 the [FluidProp](http://www.asimptote.nl/software/fluidprop) software and
 built-in access to [CoolProp](http://www.coolprop.org).
 If you use the FluidProp software, you need to have the proper licenses to
@@ -44,9 +42,7 @@ official ExternalMedia library.
 ## Installation instructions for the ExternalMedia library
 
 The provided version of ExternalMedia is compatible with Modelica
-Standard Library 3.2.3, we recommend you to use that instead of previous
-3.2.x versions, because it contains many bug fixes and is fully backwards
-compatible with them.
+Standard Library 4.0.0.
 
 If you want to experiment with the code and recompile the libraries, check
 the [compilation instructions](README_compilation.md).
@@ -58,7 +54,7 @@ and Include Files in [section 12.9.4](https://specification.modelica.org/maint/3
 Following the concepts put forward there, the ExternalMedia package provides several pre-compiled
 static libraries supporting a selection of operating systems, C-compilers and Modelica tools.
 
-Please open the `package.mo` file inside the `ExternalMedia 3.3.1` folder to
+Please open the `package.mo` file inside the `ExternalMedia 4.0.0` folder to
 load the library. If your Modelica tool is able to find a matching precompiled
 binary for your configuration, you should now be able to run the examples.
 
