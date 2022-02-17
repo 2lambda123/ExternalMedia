@@ -15,20 +15,20 @@ package ExternalTwoPhaseMedium "Generic external two phase medium package"
   constant String substanceName = substanceNames[1]
     "Only one substance can be specified";
   constant FluidConstants externalFluidConstants = FluidConstants(
-    iupacName=  "unknown",
-    casRegistryNumber=  "unknown",
-    chemicalFormula=  "unknown",
-    structureFormula=  "unknown",
-    molarMass=  getMolarMass(),
-    criticalTemperature=  getCriticalTemperature(),
-    criticalPressure=  getCriticalPressure(),
-    criticalMolarVolume=  getCriticalMolarVolume(),
-    acentricFactor=  0,
-    triplePointTemperature=  280.0,
-    triplePointPressure=  500.0,
-    meltingPoint=  280,
-    normalBoilingPoint=  380.0,
-    dipoleMoment=  2.0);
+    iupacName = "unknown",
+    casRegistryNumber = "unknown",
+    chemicalFormula = "unknown",
+    structureFormula = "unknown",
+    molarMass = getMolarMass(),
+    criticalTemperature = getCriticalTemperature(),
+    criticalPressure = getCriticalPressure(),
+    criticalMolarVolume = getCriticalMolarVolume(),
+    acentricFactor = 0,
+    triplePointTemperature = 280.0,
+    triplePointPressure = 500.0,
+    meltingPoint = 280,
+    normalBoilingPoint = 380.0,
+    dipoleMoment = 2.0);
 
   constant InputChoice inputChoice=InputChoice.ph
     "Default choice of input variables for property computations";
@@ -36,7 +36,7 @@ package ExternalTwoPhaseMedium "Generic external two phase medium package"
     // Fields in ASCII lexicographical order to work in Dymola
     Temperature T "temperature";
     VelocityOfSound a "velocity of sound";
-    Modelica.SIunits.CubicExpansionCoefficient beta
+    Modelica.Units.SI.CubicExpansionCoefficient beta
       "isobaric expansion coefficient";
     SpecificHeatCapacity cp "specific heat capacity cp";
     SpecificHeatCapacity cv "specific heat capacity cv";
@@ -47,7 +47,7 @@ package ExternalTwoPhaseMedium "Generic external two phase medium package"
       "derivative of density wrt pressure at constant enthalpy";
     DynamicViscosity eta "dynamic viscosity";
     SpecificEnthalpy h "specific enthalpy";
-    Modelica.SIunits.Compressibility kappa "compressibility";
+    Modelica.Units.SI.Compressibility kappa "compressibility";
     ThermalConductivity lambda "thermal conductivity";
     AbsolutePressure p "pressure";
     FixedPhase phase(min=0, max=2)
@@ -105,7 +105,7 @@ package ExternalTwoPhaseMedium "Generic external two phase medium package"
     SaturationProperties sat "saturation property record";
   equation
     MM = externalFluidConstants.molarMass;
-    R = Modelica.Constants.R/MM;
+    R_s = Modelica.Constants.R/MM;
     if (onePhase or (basePropertiesInputChoice == InputChoice.pT)) then
       phaseInput = 1 "Force one-phase property computation";
     else
@@ -185,25 +185,25 @@ package ExternalTwoPhaseMedium "Generic external two phase medium package"
 
   replaceable function getMolarMass
     output MolarMass MM "molar mass";
-    external "C" MM=  TwoPhaseMedium_getMolarMass_C_impl(mediumName, libraryName, substanceName)
+    external "C" MM = TwoPhaseMedium_getMolarMass_C_impl(mediumName, libraryName, substanceName)
       annotation(Include="#include \"externalmedialib.h\"", Library="ExternalMediaLib", IncludeDirectory="modelica://ExternalMedia/Resources/Include", LibraryDirectory="modelica://ExternalMedia/Resources/Library");
   end getMolarMass;
 
   replaceable function getCriticalTemperature
     output Temperature Tc "Critical temperature";
-    external "C" Tc=  TwoPhaseMedium_getCriticalTemperature_C_impl(mediumName, libraryName, substanceName)
+    external "C" Tc = TwoPhaseMedium_getCriticalTemperature_C_impl(mediumName, libraryName, substanceName)
       annotation(Include="#include \"externalmedialib.h\"", Library="ExternalMediaLib", IncludeDirectory="modelica://ExternalMedia/Resources/Include", LibraryDirectory="modelica://ExternalMedia/Resources/Library");
   end getCriticalTemperature;
 
   replaceable function getCriticalPressure
     output AbsolutePressure pc "Critical temperature";
-    external "C" pc=  TwoPhaseMedium_getCriticalPressure_C_impl(mediumName, libraryName, substanceName)
+    external "C" pc = TwoPhaseMedium_getCriticalPressure_C_impl(mediumName, libraryName, substanceName)
       annotation(Include="#include \"externalmedialib.h\"", Library="ExternalMediaLib", IncludeDirectory="modelica://ExternalMedia/Resources/Include", LibraryDirectory="modelica://ExternalMedia/Resources/Library");
   end getCriticalPressure;
 
   replaceable function getCriticalMolarVolume
     output MolarVolume vc "Critical molar volume";
-    external "C" vc=  TwoPhaseMedium_getCriticalMolarVolume_C_impl(mediumName, libraryName, substanceName)
+    external "C" vc = TwoPhaseMedium_getCriticalMolarVolume_C_impl(mediumName, libraryName, substanceName)
       annotation(Include="#include \"externalmedialib.h\"", Library="ExternalMediaLib", IncludeDirectory="modelica://ExternalMedia/Resources/Include", LibraryDirectory="modelica://ExternalMedia/Resources/Library");
   end getCriticalMolarVolume;
 
@@ -275,7 +275,7 @@ package ExternalTwoPhaseMedium "Generic external two phase medium package"
     input String cst "Keep this constant";
     input ThermodynamicState  state;
     output Real partialDerivative;
-    external "C" partialDerivative=  TwoPhaseMedium_partialDeriv_state_C_impl(of, wrt, cst, state, mediumName, libraryName, substanceName)
+    external "C" partialDerivative = TwoPhaseMedium_partialDeriv_state_C_impl(of, wrt, cst, state, mediumName, libraryName, substanceName)
     annotation(Include="#include \"externalmedialib.h\"", Library="ExternalMediaLib", IncludeDirectory="modelica://ExternalMedia/Resources/Include", LibraryDirectory="modelica://ExternalMedia/Resources/Library");
   end partialDeriv_state;
 
@@ -987,7 +987,7 @@ package ExternalTwoPhaseMedium "Generic external two phase medium package"
   end specificEntropy;
 
   redeclare replaceable function extends isentropicEnthalpy
-  external "C" h_is=  TwoPhaseMedium_isentropicEnthalpy_C_impl(p_downstream, refState,
+  external "C" h_is = TwoPhaseMedium_isentropicEnthalpy_C_impl(p_downstream, refState,
    mediumName, libraryName, substanceName)
     annotation(Include="#include \"externalmedialib.h\"", Library="ExternalMediaLib", IncludeDirectory="modelica://ExternalMedia/Resources/Include", LibraryDirectory="modelica://ExternalMedia/Resources/Library");
   end isentropicEnthalpy;
@@ -1090,7 +1090,7 @@ package ExternalTwoPhaseMedium "Generic external two phase medium package"
 
   redeclare replaceable function extends saturationTemperature_derp "Returns derivative of saturation temperature w.r.t.. pressureBeing this function inefficient, it is strongly recommended to use saturationTemperature_derp_sat
      and never use saturationTemperature_derp directly"
-  external "C" dTp=  TwoPhaseMedium_saturationTemperature_derp_C_impl(p, mediumName, libraryName, substanceName)
+  external "C" dTp = TwoPhaseMedium_saturationTemperature_derp_C_impl(p, mediumName, libraryName, substanceName)
     annotation(Include="#include \"externalmedialib.h\"", Library="ExternalMediaLib", IncludeDirectory="modelica://ExternalMedia/Resources/Include", LibraryDirectory="modelica://ExternalMedia/Resources/Library");
   end saturationTemperature_derp;
 
