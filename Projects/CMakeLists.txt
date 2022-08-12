@@ -78,6 +78,7 @@ if(COOLPROP)
       SET(FORCE_BITNESS_32 ON CACHE BOOL "force 32 bit")
     endif()
   endif()
+  SET(COOLPROP_MSVC_STATIC ON CACHE BOOL "Force the static MSVC runtime")
   # Enable this for shared libraries (either CoolProp itself or ExternalMedia)
   SET(COOLPROP_FPIC ON CACHE BOOL "force -fPIC switch")
   # Add the CoolProp sources
@@ -144,10 +145,21 @@ endif()
 add_library(${LIBRARY_NAME} SHARED ${LIB_SOURCES})
 set_property(TARGET ${LIBRARY_NAME} PROPERTY VERSION ${APP_VERSION})
 set_property(TARGET ${LIBRARY_NAME} PROPERTY DEBUG_POSTFIX "")
+set_property(TARGET ${LIBRARY_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+#
+target_compile_definitions(${LIBRARY_NAME} PRIVATE NOMINMAX) # Avoid name clash in CoolProp FMT library
+#
 target_compile_definitions(${LIBRARY_NAME} PRIVATE EXTERNALMEDIA_FLUIDPROP=$<IF:$<BOOL:${FLUIDPROP}>,1,0>)
 target_compile_definitions(${LIBRARY_NAME} PRIVATE EXTERNALMEDIA_COOLPROP=$<IF:$<BOOL:${COOLPROP}>,1,0>)
 target_compile_definitions(${LIBRARY_NAME} PRIVATE EXTERNALMEDIA_EXPORTS) # Use this for a shared library
 target_compile_definitions(${LIBRARY_NAME} PRIVATE EXTERNALMEDIA_LIBRARY_EXPORTS=1) # Use this for a shared library
+
+if (MSVC)
+  #set_property(TARGET ${LIBRARY_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL") # This is for /MD and /MDd, default behaviour
+  set_property(TARGET ${LIBRARY_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>") # This is for /MT and /MTd
+  target_compile_definitions(${LIBRARY_NAME} PRIVATE _CRT_SECURE_NO_WARNINGS)
+endif()
+
 
 if(COOLPROP)
 add_dependencies(${LIBRARY_NAME} CoolProp)
