@@ -23,15 +23,6 @@ set (LIBRARY_HEADER "externalmedialib.h")
 #######################################
 #       PROJECT-WIDE SETTINGS         #
 #######################################
-if (MSVC)
-#    # Force visual studio to statically link the c runtime to avoid dependency on MSVCRXXX.dll
-#    set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-#    set (CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-#    set (CMAKE_C_FLAGS_RELEASE   "${CMAKE_C_FLAGS_RELEASE} /MT")
-#    set (CMAKE_C_FLAGS_DEBUG     "${CMAKE_C_FLAGS_DEBUG} /MTd")
-  ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS)
-  ADD_DEFINITIONS(-DNOMINMAX) # Avoid name clash in CoolProp FMT library
-endif()
 #ADD_DEFINITIONS (-DMODELICA_ERRORS=0 -DNOMINMAX)
 # Workaround for missing ModelicaMessage and ModelicaError objects
 set(INCLUDE_DIRS "")
